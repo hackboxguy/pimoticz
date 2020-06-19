@@ -1,0 +1,25 @@
+homeassistant: false
+permit_join: true
+mqtt:
+  base_topic: zigbee2mqtt
+  server: 'mqtt://localhost'
+serial:
+  port: /dev/ttyACM0
+advanced:
+  network_key:
+    - 249
+    - 135
+    - 129
+    - 155
+    - 211
+    - 169
+    - 213
+    - 34
+    - 11
+    - 152
+    - 172
+    - 97
+    - 30
+    - 35
+    - 61
+    - 114
