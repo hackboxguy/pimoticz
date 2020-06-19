@@ -1,0 +1,2 @@
+# pimoticz
+domoticz on raspi
