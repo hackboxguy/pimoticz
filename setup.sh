@@ -42,7 +42,7 @@ DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing
 
 #install dependencies
 printf "Installing dependencies ................................ "
-DEBIAN_FRONTEND=noninteractive apt-get install -qq avahi-daemon avahi-discover libnss-mdns avahi-utils nodejs git mosquitto mosquitto-clients < /dev/null > /dev/null
+DEBIAN_FRONTEND=noninteractive apt-get install -qq avahi-daemon avahi-discover libnss-mdns avahi-utils nodejs mosquitto mosquitto-clients < /dev/null > /dev/null
 test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
 
 
@@ -78,7 +78,7 @@ cp zigbee2mqtt.service /etc/systemd/system/
 #cd /opt/zigbee2mqtt
 #npm ci
 #popd
-npm ci --prefix /opt/zigbee2mqtt &> /dev/null
+npm ci --prefix /opt/zigbee2mqtt > "/dev/null" 2>&1
 systemctl --quiet enable zigbee2mqtt.service
 systemctl --quiet start zigbee2mqtt
 test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
