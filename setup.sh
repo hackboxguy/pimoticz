@@ -42,7 +42,7 @@ DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing
 
 #install dependencies
 printf "Installing dependencies ................................ "
-DEBIAN_FRONTEND=noninteractive apt-get install -qq avahi-daemon avahi-discover libnss-mdns avahi-utils nodejs npm git mosquitto mosquitto-clients < /dev/null > /dev/null
+DEBIAN_FRONTEND=noninteractive apt-get install -qq avahi-daemon avahi-discover libnss-mdns avahi-utils nodejs git mosquitto mosquitto-clients < /dev/null > /dev/null
 test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
 
 
