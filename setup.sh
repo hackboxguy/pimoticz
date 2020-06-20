@@ -37,10 +37,12 @@ fi
 #fi
 #test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
 
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing
 
 #install dependencies
 printf "Installing dependencies ................................ "
-DEBIAN_FRONTEND=noninteractive apt-get install -qq avahi-daemon avahi-discover libnss-mdns avahi-utils nodejs git mosquitto mosquitto-clients < /dev/null > /dev/null
+DEBIAN_FRONTEND=noninteractive apt-get install -qq avahi-daemon avahi-discover libnss-mdns avahi-utils nodejs npm git mosquitto mosquitto-clients < /dev/null > /dev/null
 test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
 
 
@@ -72,10 +74,11 @@ git clone --quiet https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt > /
 chown -R pi:pi /opt/zigbee2mqtt
 cp configuration.yaml /opt/zigbee2mqtt/data/
 cp zigbee2mqtt.service /etc/systemd/system/
-pushd .
-cd /opt/zigbee2mqtt
-npm ci
-popd
+#pushd .
+#cd /opt/zigbee2mqtt
+#npm ci
+#popd
+npm ci --prefix /opt/zigbee2mqtt &> /dev/null
 systemctl --quiet enable zigbee2mqtt.service
 systemctl --quiet start zigbee2mqtt
 test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
