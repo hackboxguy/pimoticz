@@ -215,61 +215,63 @@ verifyFreeDiskSpace() {
 }
 
 chooseServices() {
-	Enable_http=false;
-	Enable_https=false;
+	Enable_http=true; #false;
+	Enable_https=true; #false;
+	
 	# Let use enable HTTP and/or HTTPS
-	cmd=(whiptail --separate-output --checklist "Select Services (press space to select)" ${r} ${c} 2)
-	options=(HTTP "Enables HTTP access" on
-	HTTPS "Enabled HTTPS access" on)
-	choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-	if [[ $? = 0 ]];then
-		for choice in ${choices}
-		do
-			case ${choice} in
-			HTTP  )   Enable_http=true;;
-			HTTPS  )   Enable_https=true;;
-			esac
-		done
-		if [ ! ${Enable_http} ] && [ ! ${Enable_https} ]; then
-			echo "::: Cannot continue, neither HTTP or HTTPS selected"
-			echo "::: Exiting"
-			exit 1
-		fi
-	else
-		echo "::: Cancel selected. Exiting..."
-		exit 1
-	fi
+	#cmd=(whiptail --separate-output --checklist "Select Services (press space to select)" ${r} ${c} 2)
+	#options=(HTTP "Enables HTTP access" on
+	#HTTPS "Enabled HTTPS access" on)
+	#choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+	#if [[ $? = 0 ]];then
+	#	for choice in ${choices}
+	#	do
+	#		case ${choice} in
+	#		HTTP  )   Enable_http=true;;
+	#		HTTPS  )   Enable_https=true;;
+	#		esac
+	#	done
+	#	if [ ! ${Enable_http} ] && [ ! ${Enable_https} ]; then
+	#		echo "::: Cannot continue, neither HTTP or HTTPS selected"
+	#		echo "::: Exiting"
+	#		exit 1
+	#	fi
+	#else
+	#	echo "::: Cancel selected. Exiting..."
+	#	exit 1
+	##fi
+	
 	# Configure the port(s)
 	if [ "$Enable_http" = true ] ; then
-		HTTP_port=$(whiptail --inputbox "HTTP Port number:" ${r} ${c} ${HTTP_port} --title "Configure HTTP" 3>&1 1>&2 2>&3)
-		exitstatus=$?
+		#HTTP_port=$(whiptail --inputbox "HTTP Port number:" ${r} ${c} ${HTTP_port} --title "Configure HTTP" 3>&1 1>&2 2>&3)
+		exitstatus=0 #$?
 		if [ $exitstatus = 0 ]; then
 			echo "HTTP Port: " $HTTP_port
 		else
 			echo "::: Cancel selected. Exiting..."
-			exit 1
+			#exit 1
 		fi	
 	fi    
 	if [ "$Enable_https" = true ] ; then
-		HTTPS_port=$(whiptail --inputbox "HTTPS Port number:" ${r} ${c} ${HTTPS_port} --title "Configure HTTPS" 3>&1 1>&2 2>&3)
-		exitstatus=$?
+		#HTTPS_port=$(whiptail --inputbox "HTTPS Port number:" ${r} ${c} ${HTTPS_port} --title "Configure HTTPS" 3>&1 1>&2 2>&3)
+		exitstatus=0 #$?
 		if [ $exitstatus = 0 ]; then
 			echo "HTTPS Port: " $HTTPS_port
 		else
 			echo "::: Cancel selected. Exiting..."
-			exit 1
+			#exit 1
 		fi	
 	fi
 }
 
 chooseDestinationFolder() {
-	Dest_folder=$(whiptail --inputbox "Installation Folder:" ${r} ${c} ${Dest_folder} --title "Destination" 3>&1 1>&2 2>&3)
-	exitstatus=$?
+	#Dest_folder=$(whiptail --inputbox "Installation Folder:" ${r} ${c} ${Dest_folder} --title "Destination" 3>&1 1>&2 2>&3)
+	exitstatus=0 #$?
 	if [ $exitstatus = 0 ]; then
 		echo ":::"
 	else
 		echo "::: Cancel selected. Exiting..."
-		exit 1
+		#exit 1
 	fi	
 }
 

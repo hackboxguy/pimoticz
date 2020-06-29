@@ -61,7 +61,8 @@ test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
 
 
 printf "Installing domoticz..................................... "
-curl -L https://install.domoticz.com | bash /dev/stdin "--unattended"
+#curl -L https://install.domoticz.com | bash /dev/stdin "--unattended"
+./install-domoticz.sh --unattended
 test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
 
 
