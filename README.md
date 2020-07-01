@@ -7,8 +7,8 @@ steps for installation.
   2. boot the raspi and do the startup wizard based steps for setting the languae and time-zone.
   3. open terminal on raspi and run the following 5 commands.
     
-    * `cd /home/pi`
-    * `git clone https://github.com/hackboxguy/pimoticz.git`
-    * `cd pimoticz`
-    * `sudo ./setup.sh` (or sudo ./setup.sh -h my-pimoticz-hostname)
-    * `sudo reboot`
+    * ```cd /home/pi```
+    * ```git clone https://github.com/hackboxguy/pimoticz.git```
+    * ```cd pimoticz```
+    * ```sudo ./setup.sh``` (or sudo ./setup.sh -h my-pimoticz-hostname)
+    * ```sudo reboot```
