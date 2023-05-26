@@ -1,25 +1,14 @@
-homeassistant: false
-permit_join: false
+# Minimal configuration.yml example
+homeassistant: true
+permit_join: true
 mqtt:
-  base_topic: zigbee2mqtt
-  server: 'mqtt://localhost'
+   base_topic: zigbee2mqtt
+   server: mqtt://localhost
 serial:
-  port: /dev/ttyACM0
+     port: /dev/ttyUSB0
+frontend:
+     port: 9090
 advanced:
-  network_key:
-    - 249
-    - 135
-    - 129
-    - 155
-    - 211
-    - 169
-    - 213
-    - 34
-    - 11
-    - 152
-    - 172
-    - 97
-    - 30
-    - 35
-    - 61
-    - 114
+     pan_id: GENERATE
+     ext_pan_id: [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08]
+     network_key: GENERATE

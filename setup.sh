@@ -18,14 +18,14 @@ fi
 
 printf "Installing dependencies ................................ "
 #curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-curl -sL https://deb.nodesource.com/setup_12.x > /tmp/new-node-install.sh
+curl -fsSL https://deb.nodesource.com/setup_16.x > /tmp/new-node-install.sh
 chmod +x /tmp/new-node-install.sh
 /tmp/new-node-install.sh 1>/dev/null 2>/dev/null
 DEBIAN_FRONTEND=noninteractive apt-get update --fix-missing < /dev/null > /dev/null
 
 #install dependencies
 #printf "Installing dependencies ................................ "
-DEBIAN_FRONTEND=noninteractive apt-get install -qq avahi-daemon avahi-discover libnss-mdns avahi-utils nodejs mosquitto mosquitto-clients jq < /dev/null > /dev/null
+DEBIAN_FRONTEND=noninteractive apt-get install -qq avahi-daemon avahi-discover libnss-mdns avahi-utils nodejs git make g++ gcc mosquitto mosquitto-clients jq < /dev/null > /dev/null
 test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
 
 
@@ -35,21 +35,9 @@ sed -i "s/pimoticz\(.*\)/$HOST_NAME\"/g" avahi-publish-media-mux.sh
 test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
 
 
-#set hostname
-printf "Setting hostname ....................................... "
-echo "$HOST_NAME" > /etc/hostname
-test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
-
-
 #setup auto startup script
 printf "Customizing rc.local ................................... "
 cp rc.local /etc/
-test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
-
-
-printf "Enabling ssh server .................................... "
-systemctl enable ssh 1>/dev/null 2>/dev/null
-systemctl start ssh 1>/dev/null 2>/dev/null
 test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
 
 
@@ -65,20 +53,20 @@ test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
 
 
 printf "Installing domoticz..................................... "
-#curl -L https://install.domoticz.com | bash /dev/stdin "--unattended"
-./install-domoticz.sh --unattended 1>/dev/null 2>/dev/null
-test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
+curl -sSfL https://install.domoticz.com | bash /dev/stdin "--unattended"
+#./install-domoticz.sh --unattended 1>/dev/null 2>/dev/null
+#test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
 
-
-printf "Installing domoticz-plugins............................. "
-git clone --quiet https://github.com/stas-demydiuk/domoticz-plugins-manager.git /home/pi/domoticz/plugins/plugins-manager > /dev/null
+#printf "Installing domoticz-plugins............................. "
+#git clone --quiet https://github.com/stas-demydiuk/domoticz-plugins-manager.git /home/pi/domoticz/plugins/plugins-manager > /dev/null
 git clone --quiet https://github.com/stas-demydiuk/domoticz-zigbee2mqtt-plugin.git /home/pi/domoticz/plugins/zigbee2mqtt > /dev/null
-test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
+#test 0 -eq $? && echo "[OK]" || echo "[FAIL]"
 
-#systemctl --quiet enable domoticz.service
-systemctl --quiet stop domoticz.service
+service domoticz.sh stop
 cp domoticz.db /home/pi/domoticz/
-systemctl --quiet start domoticz.service
+mkdir -p /home/pi/domoticz/scripts/dzVents/generated_scripts/
+cp domoticz-scripts/*.lua /home/pi/domoticz/scripts/dzVents/generated_scripts/
+service domoticz.sh start
 sync
 
 echo   "Setup completed successfully! Reboot the board ......... "
